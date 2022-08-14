@@ -23,16 +23,16 @@ func handleExec(c *gin.Context) {
 	varName := c.Query("var")
 	body, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	}
 
 	script := string(body)
 	value, err := execJs(script, varName)
 	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	}
 
-	c.JSON(http.StatusOK, gin.H{"value": value})
+	c.Data(http.StatusOK, "text/javascript", []byte(value))
 }
 
 func execJs(script string, varName string) (string, error) {
