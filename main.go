@@ -1,5 +1,9 @@
 package main
 
-func main() {
+import (
+	"jsexecsrv/app"
+)
 
+func main() {
+	app.Run()
 }
